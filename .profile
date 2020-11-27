@@ -50,15 +50,17 @@ gitpullrelease() {
 gitmergetodev() {
 	cur_branch=`git branch --show-current`
 	git fetch && git checkout 'dev' && git pull --rebase
-	git merge $1
+	git merge $cur_branch
 	git switch "$cur_branch"
 	# echo "switch to $cur_branch"
 }
 
 gitmergetotest() {
 	cur_branch=`git branch --show-current`
-	git fetch && git checkout 'test' && git pull --rebase
-	git merge $1
+	git fetch && git checkout 'dev' && git pull --rebase
+	git merge $cur_branch
+	git checkout 'test' && git pull --rebase
+	git merge $cur_branch
 	git switch "$cur_branch"
 	# echo "switch to $cur_branch"
 }
@@ -66,11 +68,11 @@ gitmergetotest() {
 gitmergetorelease() {
 	cur_branch=`git branch --show-current`
 	git fetch && git checkout 'dev' && git pull --rebase
-	git merge $1
+	git merge $cur_branch
 	git checkout 'test' && git pull --rebase
-	git merge $1
+	git merge $cur_branch
 	git checkout 'release' && git pull --rebase
-	git merge $1
+	git merge $cur_branch
 	git switch "$cur_branch"
 	# echo "switch to $cur_branch"
 }
